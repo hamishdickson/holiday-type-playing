@@ -6,11 +6,6 @@ trait A[T] {
 }
 
 object Playing {
-  // f-bounded polymorphism
-  sealed abstract class Foo[Self <: Foo[_]](implicit val evidence: A[Self])
-  final case class Bar(s: String) extends Foo[Bar]
-  final case class Baz(i: Int) extends Foo[Baz]
-
   implicit val barA = new A[Bar] {
     type O = String
     def f(t: Bar): O = t.s
@@ -20,6 +15,12 @@ object Playing {
     type O = Int
     def f(t: Baz): O = t.i
   }
+
+  // f-bounded polymorphism
+  sealed abstract class Foo[B <: Foo[B]](implicit val evidence: A[B])
+  final case class Bar(s: String) extends Foo[Bar]
+  final case class Baz(i: Int) extends Foo[Baz]
+
 
   /*
   this no compile (which is what I want - it's not a subtype of Foo)
