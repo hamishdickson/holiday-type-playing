@@ -10,8 +10,5 @@ libraryDependencies ++= Seq(
 )
 
 scalacOptions ++= Seq(
-  "-Ywarn-unused-import",
-  "-Xlint",
-  "-Xfatal-warnings",
   "-Ypartial-unification"
 )
